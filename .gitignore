@@ -1,0 +1,9 @@
+# not vendor file
+vendor/
+
+#not environment file
+.env
+
+# not my help text file
+HELP.txt
+
