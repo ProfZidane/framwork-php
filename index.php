@@ -6,7 +6,19 @@ define("WORK_DIRECTORY", "/php");
 
     require 'app/Autoloader.php';  // chargement de l'autoloader
     App\Autoloader::register(); // utiliser la méthode register() de l'autoloader
+
+
+    use App\CSRF; // token
+    
+    // echo $token->generateToken();
+
+    // My router
     require("routes/web.php");
+/* 
+    use App\CreateUtilisateurTable;
+
+    $migration = new CreateUtilisateurTable();
+    $migration->push('utilisateurs'); */
 
     //require("routes/web.php");
     // require("ressources/views/home.php");

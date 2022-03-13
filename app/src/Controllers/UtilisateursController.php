@@ -19,10 +19,12 @@
         
         public function have($id) {
             $user = new Utilisateurs();
-            /* $user_response = $user->get();   
-            var_dump($user_response); */
+            $user_response = $user->get();   
+            //var_dump($user_response);
             $user_response = $user->where('id', $id);
             return $user_response;
+            // echo "ze";  
+            // var_dump($this->request);
         }
 
 

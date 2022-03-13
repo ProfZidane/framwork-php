@@ -35,10 +35,11 @@
             }
 
             for ($i = 0; $i < count($array_value); $i++) {
-                if ($i == count($array_value)-1) {
-                    $value_table = $value_table . "'$array_value[$i]'";
+                $p = $this->fillable[$i];
+                if ($i == count($array_value)-1) {                    
+                    $value_table = $value_table . "'$array_value[$p]'";
                 } else {
-                    $value_table = $value_table . "'$array_value[$i]'" . ",";
+                    $value_table = $value_table . "'$array_value[$p]'" . ",";
                 }
                 
             }
@@ -111,13 +112,23 @@
             $div = explode("\\", get_class($this));
             $table_name =  strtolower($div[count($div) - 1]);
 
-            $sql = "SELECT * FROM " . $table_name . " WHERE " . $attr . " = " . $attr_value;
+            $type = gettype($attr);
 
+            // echo $type;
+
+            if ($type === 'string') {
+                $new_val = '"' . $attr_value . '"';
+            } else {
+                $new_val = $attr_value;
+            }
+
+            $sql = "SELECT * FROM " . $table_name . " WHERE " . $attr . " = " . $new_val;
+            
             $req = $this->requestSQL($sql);
 
             $datas = $req->fetchAll();
 
-            return $datas;
+            return $datas ?: null;
             
         }
 
@@ -146,7 +157,17 @@
             $div = explode("\\", get_class($this));
             $table_name =  strtolower($div[count($div) - 1]);
 
-            $sql = "UPDATE " . $table_name . " SET " . $attr . " = " . $attr_value . " WHERE id = " . $id;
+            $type = gettype($attr);
+
+            // echo $type;
+
+            if ($type === 'string') {
+                $new_val = '"' . $attr_value . '"';
+            } else {
+                $new_val = $attr_value;
+            }
+
+            $sql = "UPDATE " . $table_name . " SET " . $attr . " = " . $new_val . " WHERE id = " . $id;
 
             $req = $this->requestSQL($sql);
 

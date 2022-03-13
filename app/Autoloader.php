@@ -23,7 +23,8 @@ class Autoloader{
             $class = str_replace(__NAMESPACE__ . '\\', '', $class);
             $class = str_replace('\\', '/', $class);
             $paths = array(            
-                join(DIRECTORY_SEPARATOR, [__DIR__]),                                           
+                join(DIRECTORY_SEPARATOR, [__DIR__]),
+                join(DIRECTORY_SEPARATOR, [__DIR__, 'security']),                                           
                 join(DIRECTORY_SEPARATOR, [__DIR__, 'src', 'Models']),
                 join(DIRECTORY_SEPARATOR, [__DIR__, 'src', 'Migrations']),
                 join(DIRECTORY_SEPARATOR, [__DIR__, 'src', 'Controllers'])                

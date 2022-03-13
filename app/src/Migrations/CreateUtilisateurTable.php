@@ -16,6 +16,16 @@
                 "name" => "name",
                 "type" => "VARCHAR(100)",
                 "add" => ""
+            ],
+            [
+                "name" => "email",
+                "type" => "VARCHAR(50)",
+                "add" => ""
+            ],
+            [
+                "name" => "password",
+                "type" => "VARCHAR(200)",
+                "add" => ""
             ]
         ];
 

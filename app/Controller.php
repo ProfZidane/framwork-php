@@ -5,8 +5,17 @@
 
     class Controller {
         
-        public function __contruct() {
+        protected $request;
 
+        public function __construct() {
+            
+            if ($_POST) {
+
+                $this->request = $_POST;
+                
+            }
+            
+            
         }
 
 

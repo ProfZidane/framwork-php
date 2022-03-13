@@ -17,7 +17,8 @@ ECHO ===========================================================================
 :: ECHO Choisissez une option : 
 ECHO 1. Creer un model
 ECHO 2. Creer un controller
-ECHO 3. A propos
+ECHO 3. Creer une vue
+ECHO 4. A propos
 
 set choice=
 set /p choice=Choisissez une option :
@@ -27,7 +28,9 @@ if %choice% ==1 goto :makeModel
 
 if %choice% ==2 goto :makeController
 
-if %choice% ==3 goto :about
+if %choice% ==3 goto :makeView
+
+if %choice% ==4 goto :about
 
 
 :makeModel
@@ -142,5 +145,15 @@ echo:
 echo Aide dans la creation des models et controllers
 echo Pour plus de facilitation, inserer dans les variables env
 
+
+:makeView
+echo:
+set /p MYNAMEV="Entrez le nom de la vue: "
+echo    ^<p^> > ressources/views/%MYNAMEV%.php
+echo    la vue %MYNAMEV% a été créée >> ressources/views/%MYNAMEV%.php
+echo    ! ^</p^> >> ressources/views/%MYNAMEV%.php
+echo Vue %MYNAMEV% a ete cree !
+
+exit /b 0
 
 endlocal

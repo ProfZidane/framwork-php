@@ -20,11 +20,33 @@ use AltoRouter;
         }
 
 
-        public function get($route, $target) {
+        // Remettre lancien get
+        public function get($route, $target, $guard=null) {
+
+            
 
             $this->routerAlto->map('GET', $route, $target);
 
             $match = $this->routerAlto->match();
+
+            if ($guard !== null) {
+                // var_dump($guard);
+                $result = call_user_func_array(array($guard[0], $guard[1]), array());
+                
+                if ($result !== true) {
+                    // echo "d";
+                    session_start();
+                    $_SESSION = array();
+                    session_destroy();
+                    // header("Location: ", true, 200);
+                    header('Location: http://localhost/php/', true);                    
+                    exit;
+                }
+
+                
+
+                
+            }
 
             // var_dump($match);
 
@@ -41,6 +63,7 @@ use AltoRouter;
                 // verifie si ya des parametres
                 if (count($match['params']) !== 0) {
 
+                    // var_dump($match['params']);
                     // matchage des parametres
                     foreach ($match['params'] as $key => $value) {
                         # code...
@@ -48,12 +71,14 @@ use AltoRouter;
                     }
 
                     // var_dump($array_params);
+                    
                     ob_start();
                     $result = call_user_func_array(array($match['target'][0], $match['target'][1]), $array_params);    
                     require_once __DIR__ . "/../ressources/views/{$match['target'][2]}.php";
                     $content = ob_get_clean();
                     require __DIR__ . "/../ressources/views/layouts/app.php";
-
+                    
+                    exit;
                 } else {
 
                     //sinon execution directe
@@ -62,10 +87,11 @@ use AltoRouter;
                     require_once __DIR__ . "/../ressources/views/{$match['target'][2]}.php";
                     $content = ob_get_clean();
                     require __DIR__ . "/../ressources/views/layouts/app.php";
-
+                    
 
                 }
                 
+                exit;
 
             } else if ((is_array($match)) && ($match != null)) {
 
@@ -80,7 +106,10 @@ use AltoRouter;
                     require __DIR__ . "/../ressources/views/layouts/app.php";
                 }
 
+                exit;
             }
+
+            
 
             return $this;
 
@@ -94,7 +123,7 @@ use AltoRouter;
             $this->routerAlto->map("POST", $route, $target);
             $match = $this->routerAlto->match();
             // var_dump($match);
-            echo "<br>";
+            // echo "<br>";
             // var_dump($_POST);
 
             if (is_array($match['target'])) {
@@ -103,25 +132,32 @@ use AltoRouter;
                 $array_data = array();
                 $true_array = [];
 
-                foreach ($_POST as $key => $value) {
+                /* foreach ($_POST as $key => $value) {
                     # code...
                     array_push($array_data, $value);
                 }
 
                 array_push($true_array, $array_data);
-                // var_dump($array_data);
-                // $this->generate('user');
+                var_dump($array_data); */
+                // echo "<br>";
+                
                 ob_start();
-                $result = call_user_func_array(array($match['target'][0], $match['target'][1]), $true_array);    
+                $result = call_user_func_array(array($match['target'][0], $match['target'][1]), array());
                 require_once __DIR__ . "/../ressources/views/{$match['target'][2]}.php";
                 $content = ob_get_clean();
                 require __DIR__ . "/../ressources/views/layouts/app.php";
+                // $this->generate('user');
+                /* ob_start();
+                $result = call_user_func_array(array($match['target'][0], $match['target'][1]), $true_array);    
+                require_once __DIR__ . "/../ressources/views/{$match['target'][2]}.php";
+                $content = ob_get_clean();
+                require __DIR__ . "/../ressources/views/layouts/app.php"; */
+
+                exit;
+            } 
 
 
-            } else {
-               // echo "url not found";
-            }
-
+            // exit;
             return $this;
             
         }
@@ -139,7 +175,6 @@ use AltoRouter;
 
         public static function run($match) {
 
-            var_dump(match);
 
         }
     }
