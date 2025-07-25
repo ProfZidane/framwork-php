@@ -14,7 +14,7 @@ Ce framework PHP personnalisé offre une architecture MVC complète avec des fon
 - **Routing avancé** avec AltoRouter et paramètres dynamiques
 - **Système de middleware** et guards pour la sécurité
 
-### 🗄Base de données
+### Base de données
 - **ORM léger** avec Active Record pattern
 - **Système de migrations** pour la gestion de schéma
 - **Query Builder** intégré pour les requêtes complexes
